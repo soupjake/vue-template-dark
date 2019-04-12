@@ -10,7 +10,7 @@
          </v-img>
       </v-flex>
       <v-container fluid class="content-container">
-         <v-layout row wrap justify-space-around>
+         <v-layout row wrap justify-space-between>
             <v-flex xs12>
                <h2 class="content-title primary--text mb-4">Who Am I</h2>
             </v-flex>

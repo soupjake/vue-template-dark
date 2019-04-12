@@ -9,8 +9,8 @@
             </v-layout>
          </v-img>
       </v-flex>
-      <v-container fluid class="container-padding">
-         <v-layout row wrap justify-space-around>
+      <v-container fluid class="content-container">
+         <v-layout row wrap justify-space-between>
             <v-flex xs12>
                <h2 class="content-title primary--text mb-4">Our Services</h2>
             </v-flex>

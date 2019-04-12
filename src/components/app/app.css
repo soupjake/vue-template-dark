@@ -1,5 +1,5 @@
 .content-container {
-    padding: 48px;
+    padding: 56px;
 }
 
 .content-image {
@@ -39,7 +39,7 @@
 
 @media (max-width: 960px) {
     .content-container {
-        padding: 24px;
+        padding: 32px;
     }
 
     .content-title {
