@@ -2,22 +2,17 @@
    <v-layout column>
       <v-flex xs12>
          <v-img :src="require('@/assets/photo5.jpg')" height="100vh">
-            <v-layout column text-xs-right justify-end fill-height pa-5 v-if="$vuetify.breakpoint.mdAndUp">
-               <h1 class="primary--text text-uppercase display-4">
-                  Services
-               </h1>
-            </v-layout>
-            <v-layout column text-xs-right justify-end fill-height pa-3 v-else>
-               <h1 class="primary--text text-uppercase display-2">
+            <v-layout column text-xs-right justify-end fill-height class="header-padding">
+               <h1 class="header-text primary--text">
                   Services
                </h1>
             </v-layout>
          </v-img>
       </v-flex>
-      <v-container container pa-5 fluid>
+      <v-container fluid class="container-padding">
          <v-layout row wrap justify-space-around>
             <v-flex xs12>
-               <h2 class="display-2 font-weight-bold primary--text mb-4">Our Services</h2>
+               <h2 class="content-title primary--text mb-4">Our Services</h2>
             </v-flex>
             <v-flex md5 xs12 v-for="(service, i) in services" :key="i" pb-4>
                <v-card>
@@ -38,7 +33,7 @@
                </v-card>
             </v-flex>
             <v-flex xs12 mt-4>
-               <h2 class="display-2 font-weight-bold primary--text mb-4">Purchase</h2>
+               <h2 class="content-title primary--text mb-4">Purchase</h2>
             </v-flex>
             <v-flex md5 xs12 mb-4>
                <h2 class="primary--text title font-weight-light text-uppercase mb-3">Select a service to book</h2>
