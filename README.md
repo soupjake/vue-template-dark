@@ -1,6 +1,6 @@
 # vue-template-dark
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/11b7cfb7-0d6c-4f21-bd0e-fe5ad4283bac/deploy-status)](https://app.netlify.com/sites/snakey-vue-light/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5a33d164-93ab-45e3-9d32-0b6b7b9c0f92/deploy-status)](https://app.netlify.com/sites/snakey-vue-dark/deploys)
 
 ## Project setup
 ```
