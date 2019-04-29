@@ -1,22 +1,11 @@
 import { Component, Vue } from 'vue-property-decorator';
-import { CalendarResponse } from '@/models/calendar_response';
+import { CalendarEvent } from '@/models/calendar_event';
 
 @Component
 export default class ServiceComponent extends Vue {
   calendarId: string = "superjakegough@googlemail.com";
   apiKey: string = "AIzaSyBvmReU86a01NtFMHZXPD7cMpXbH8T0SCk";
-  calendarResponse: CalendarResponse = {
-    kind: "",
-    etag: "",
-    summary: "",
-    updated: "",
-    timeZone: "",
-    accessRole: "",
-    defaultReminders: [],
-    nextSyncToken: "",
-    items: []
-  };
-
+  events: CalendarEvent[] = [];
   name: string = "";
   email: string = "";
   service: string = "";
@@ -56,7 +45,7 @@ export default class ServiceComponent extends Vue {
       text: 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.'
     }
   ];
-  
+
   created() {
     this.getEvents();
   }
@@ -82,7 +71,20 @@ export default class ServiceComponent extends Vue {
       "/events?key=" + this.apiKey + "&timeMin=" + (new Date().toISOString()))
       .then(response => response.json())
       .then(data => {
-        this.calendarResponse = data;
+        for(var i = 0; i < data["items"].length; i++){
+          var dateString = "date" in data["items"][i]["start"] ? data["items"][i]["start"]["date"] : data["items"][i]["start"]["dateTime"];
+          this.events.push({
+            title: data["items"][i]["summary"],
+            date: dateString,
+            open: false
+          });
+        }
       });
-  }
+    }
+
+    get eventsMap() {
+      const map: { [date: string] : CalendarEvent[]; } = {};
+      this.events.forEach(e => (map[e.date] = map[e.date] || []).push(e));
+      return map
+    }
 }
