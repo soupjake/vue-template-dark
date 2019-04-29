@@ -33,35 +33,12 @@
             class="primary--text title font-weight-light text-uppercase mb-3"
           >Select a service to book</h2>
           <v-form ref="form" lazy-validation>
-            <v-select
-              v-model="service"
-              :items="services"
-              item-text="title"
-              label="Service"
-              box
-              required
-            ></v-select>
+            <v-select v-model="service" :items="services" item-text="title" label="Service" box required></v-select>
             <v-text-field v-model="name" label="Name" box required></v-text-field>
             <v-text-field v-model="email" label="Email" box required></v-text-field>
-            <v-dialog
-              ref="datepicker"
-              v-model="datemodal"
-              :return-value.sync="date"
-              persistent
-              lazy
-              full-width
-              width="290px"
-            >
+            <v-dialog ref="datepicker" v-model="datemodal" :return-value.sync="date" persistent lazy full-width width="290px">
               <template v-slot:activator="{ on }">
-                <v-text-field
-                  v-model="date"
-                  label="Date"
-                  append-icon="event"
-                  readonly
-                  v-on="on"
-                  box
-                  required
-                ></v-text-field>
+                <v-text-field v-model="date" label="Date" append-icon="event" readonly v-on="on" box required></v-text-field>
               </template>
               <v-date-picker v-model="date" scrollable>
                 <v-spacer></v-spacer>
@@ -69,25 +46,9 @@
                 <v-btn flat color="primary" @click="$refs.datepicker.save(date)">OK</v-btn>
               </v-date-picker>
             </v-dialog>
-            <v-dialog
-              ref="timepicker"
-              v-model="timemodal"
-              :return-value.sync="time"
-              persistent
-              lazy
-              full-width
-              width="290px"
-            >
+            <v-dialog ref="timepicker" v-model="timemodal" :return-value.sync="time" persistent lazy full-width width="290px">
               <template v-slot:activator="{ on }">
-                <v-text-field
-                  v-model="time"
-                  label="Time"
-                  append-icon="access_time"
-                  readonly
-                  v-on="on"
-                  box
-                  required
-                ></v-text-field>
+                <v-text-field v-model="time" label="Time" append-icon="access_time" readonly v-on="on" box required></v-text-field>
               </template>
               <v-time-picker v-if="timemodal" v-model="time" full-width>
                 <v-spacer></v-spacer>
@@ -103,12 +64,29 @@
         </v-flex>
         <v-flex lg5 xs12>
           <h2 class="primary--text title font-weight-light text-uppercase mb-3">Calender</h2>
-            <v-calendar color="primary" style="padding-bottom: 120px;">
+            <v-calendar color="primary" :value="nowString" style="height: 620px;">
             <template v-slot:day="{ date }">
-               <v-sheet v-for="(event, i) in eventsMap[date]" :key="i" :title="event.summary" color="primary"
-                  width="100%" height="100%" tile></v-sheet>
+               <v-card v-for="(event, i) in eventsMap[date]" :key="i" color="primary">
+                 <v-card-title>
+                    {{event.title}}
+                </v-card-title>
+               </v-card>
             </template>
             </v-calendar>
+           <v-layout justify-space-between pt-4>
+              <v-btn @click="prev()" color="primary">
+                <v-icon dark left>
+                  keyboard_arrow_left
+                </v-icon>
+                Prev
+              </v-btn>
+              <v-btn @click="next()" color="primary">
+                Next
+                <v-icon dark right>
+                  keyboard_arrow_right
+                </v-icon>
+              </v-btn>
+            </v-layout>
         </v-flex>
       </v-layout>
       <v-layout justify-center>

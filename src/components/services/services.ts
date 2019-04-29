@@ -3,9 +3,11 @@ import { CalendarEvent } from '@/models/calendar_event';
 
 @Component
 export default class ServiceComponent extends Vue {
-  calendarId: string = "superjakegough@googlemail.com";
-  apiKey: string = "AIzaSyBvmReU86a01NtFMHZXPD7cMpXbH8T0SCk";
+  calendarId: string = "";
+  apiKey: string = "";
   events: CalendarEvent[] = [];
+  now: Date = new Date();
+  nowString: string = "";
   name: string = "";
   email: string = "";
   service: string = "";
@@ -48,43 +50,47 @@ export default class ServiceComponent extends Vue {
 
   created() {
     this.getEvents();
+    this.nowString = this.convertDate();
   }
-
-  next() {
-    this.onboarding = this.onboarding + 1 === this.services.length
-      ? 0
-      : this.onboarding + 1
-  };
-
-  prev() {
-    this.onboarding = this.onboarding - 1 < 0
-      ? this.services.length - 1
-      : this.onboarding - 1
-  };
 
   send() {
     console.log(this.service);
   }
 
-  getEvents() {
-    this.$http.get("https://www.googleapis.com/calendar/v3/calendars/" + this.calendarId +
-      "/events?key=" + this.apiKey + "&timeMin=" + (new Date().toISOString()))
-      .then(response => response.json())
-      .then(data => {
-        for(var i = 0; i < data["items"].length; i++){
-          var dateString = "date" in data["items"][i]["start"] ? data["items"][i]["start"]["date"] : data["items"][i]["start"]["dateTime"];
-          this.events.push({
-            title: data["items"][i]["summary"],
-            date: dateString,
-            open: false
-          });
-        }
-      });
-    }
+  next() {
+    this.now.setMonth(this.now.getMonth() + 1);
+    this.nowString = this.convertDate();    
+  }
 
-    get eventsMap() {
-      const map: { [date: string] : CalendarEvent[]; } = {};
-      this.events.forEach(e => (map[e.date] = map[e.date] || []).push(e));
-      return map
-    }
+  prev() {
+    this.now.setMonth(this.now.getMonth() - 1);
+    this.nowString = this.convertDate();
+  }
+
+  getEvents() {
+    // Use the below method with your public Google Calender Id and Api Key to get events 
+    // this.$http.get("https://www.googleapis.com/calendar/v3/calendars/" + this.calendarId +
+    //   "/events?key=" + this.apiKey + "&timeMin=" + (new Date().toISOString()))
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     for (var i = 0; i < data["items"].length; i++) {
+    //       var dateString = "date" in data["items"][i]["start"] ? data["items"][i]["start"]["date"] : data["items"][i]["start"]["dateTime"];
+    //       this.events.push({
+    //         title: data["items"][i]["summary"],
+    //         date: dateString,
+    //         open: false
+    //       });
+    //     }
+    //   });
+  }
+
+  convertDate() {
+    return this.now.getFullYear() + "-" + (this.now.getMonth() + 1) + "-"  + this.now.getDate();
+  }
+
+  get eventsMap() {
+    const map: { [date: string]: CalendarEvent[]; } = {};
+    this.events.forEach(e => (map[e.date] = map[e.date] || []).push(e));
+    return map;
+  }
 }
